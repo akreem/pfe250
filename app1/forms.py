@@ -23,6 +23,12 @@ class funcform(forms.Form):
         ('VRF','VRF'),
         ('Protocols','Protocols')
     )
-    router = forms.CharField(label="router",max_length=50)
-    verification = forms.MultipleChoiceField(label="verification", choices=choices, widget=forms.CheckboxSelectMultiple)
+    router = forms.CharField(label="Router",max_length=50)
+    verification = forms.ChoiceField(label="Verification", choices=choices)
+    def __init__(self, *args, **kwargs):
+        super(funcform, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['router'].widget.attrs.update({'class': 'form-control'})
+        self.fields['verification'].widget.attrs.update({'class': 'form-control'})
+
             
