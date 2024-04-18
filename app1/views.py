@@ -3,7 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm
+from .forms import SignupForm, funcform
+from .functions import HostnameFunc
 
 # Create your views here.
 @login_required(login_url='login')
@@ -48,3 +49,18 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+#hostname view
+def hostname(response):
+    
+    if response.method == 'POST':
+        form = funcform(response.POST)
+        if form.is_valid():
+            router = form.cleaned_data['router']
+            job = HostnameFunc(router)
+            return HttpResponse(f'Job resutl : {job}')
+    else:
+        form = funcform()
+
+    context={'form': form}
+    return render(response,"hostname.html",context)
