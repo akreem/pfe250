@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form
-from .functions import HostnameFunc, set_interface, changehostname, ospf, eigrp
+from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc
 
 # Create your views here.
 @login_required(login_url='login')
@@ -78,7 +78,7 @@ def set_interface(response):
             network = form.cleaned_data['network']
             Masque = form.cleaned_data['Masque']
 
-            job = set_interface(iprouter,interface,description,network,Masque)
+            job = set_interfaceFunc(iprouter,interface,description,network,Masque)
             return HttpResponse(f'Job result : {job}')
     else:
         form = setinterfaceform()
@@ -93,7 +93,7 @@ def changehostname(response):
         if form.is_valid():
             iprouter = form.cleaned_data['iprouter']
             hostname = form.cleaned_data['hostname']
-            job = changehostname(iprouter,hostname)
+            job = changehostnameFunc(iprouter,hostname)
             return HttpResponse(f'Job result : {job}')
     else:
         form = changehostnameform()
@@ -112,7 +112,7 @@ def ospf(response):
             network_i = form.cleaned_data['network_i']
             area_id = form.cleaned_data['area_id']
 
-            job = ospf(hostip,ospfprocid,network_i,area_id)
+            job = ospfFunc(hostip,ospfprocid,network_i,area_id)
             return HttpResponse(f'Job result : {job}')
     else:
         form = ospf_form()
@@ -130,7 +130,7 @@ def eigrp(response):
             eigrpprocid = form.cleaned_data['eigrpprocid']
             network_i = form.cleaned_data['network_i']
 
-            job = eigrp(hostip,eigrpprocid,network_i)
+            job = eigrpFunc(hostip,eigrpprocid,network_i)
             return HttpResponse(f'Job result : {job}')
     else:
         form = eigrp_form()
