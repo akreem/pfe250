@@ -2,36 +2,35 @@
 {% block content %}
 <h1>MPLS Configuration</h1>
 <br>
-<h4>VRF, Interfaces, OSPF, EIGRP, RIP and BGP configuration</h4>
+<h4>VRF, Interfaces, OSPF, EIGRP configuration</h4>
 <br>
-<button type="button" class="btn btn-danger" 
+<!--<button type="button" class="btn btn-danger" 
 title="" data-toggle="tooltip" 
 >L3VPN</button>
 
 <button type="button" class="btn btn-danger" 
 title="" data-toggle="tooltip" 
->EIGRP</button>
+>RIP</button>-->
 
-<button type="button" class="btn btn-danger" 
+<a href="/eigrp" type="button" class="btn btn-danger" 
 title="" data-toggle="tooltip" 
->RIP</button>
+>EIGRP</a>
 
-<button type="button" class="btn btn-danger" 
+<a href="/ospf" type="button" class="btn btn-danger" 
 title="" data-toggle="tooltip" 
->OSPF</button>
+>OSPF</a>
 
-<button type="button" class="btn btn-danger" 
+<!--<button type="button" class="btn btn-danger" 
 title="" data-toggle="tooltip" 
->BGP</button>
+>BGP</button>-->
 
-<button type="button" class="btn btn-primary" 
+<a href="/setinterface" type="button" class="btn btn-primary" 
 title="" data-toggle="tooltip" 
->SET INTERFACE</button>
-<br>
-<br>
-<button type="button" class="btn btn-dark" 
+>SET INTERFACE</a>
+
+<a href="/changehostname" type="button" class="btn btn-dark" 
 title="" data-toggle="tooltip" 
->CHANGE HOSTNAME</button>
+>CHANGE HOSTNAME</a>
 
 <a href="/hostname" type="button" class="btn btn-success" 
 title="" data-toggle="tooltip" 

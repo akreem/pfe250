@@ -1,7 +1,8 @@
 from time import sleep
+from netmiko import ConnectHandler
 import paramiko
 
-def HostnameFunc(router_p):
+def HostnameFunc(router_p,verification):
     try:
         router = router_p
         
@@ -12,19 +13,114 @@ def HostnameFunc(router_p):
         router_conn = conn.invoke_shell()
         
         print('Successfully connected to %s' % router)
-        
-        router_conn.send('show ip route\n')
-        sleep(1)  # Wait for the cmd to be sent and processed
-        
-        # Send the command and wait for it to execute
-        router_conn.send(' enable\n')
-        sleep(2)
-        router_conn.send(' amine123\n')
-        sleep(3)
-        router_conn.send('configure terminal\n')
-        sleep(4)
+
+        if verification == 'configuration':
+            router_conn.send('show ip running-config\n')
+
+        elif verification == 'route':
+            router_conn.send('show ip route Running\n')
+
+        elif verification == 'vrf':
+            router_conn.send('show ip vrf\n')
+
+        elif verification == 'protocols':
+            router_conn.send('show ip protocols\n')
+
         # Read the output, decode into UTF-8 (ASCII) text, and print
         return router_conn.recv(5000).decode("utf-8")
     
     except Exception as e:
         return f'An error occurred {e}'
+
+def eigrp(hostip,eigrpprocid,network_i):
+    device = {
+    'device_type': 'cisco_ios',
+    'host': hostip,
+    'username': 'amine',
+    'password': 'amine123',
+    'secret': 'amine123'
+    }
+    myssh = ConnectHandler(**device)
+    hostname = myssh.send_command('show run | i host')
+    x = hostname.split()
+    device = x[1]
+    #eigrpprocid = input('EIGRP Process ID #: ')
+    routereigrp = 'router eigrp ' + eigrpprocid
+    config_commands = [routereigrp]
+    output = myssh.send_config_set(config_commands)
+    print(output)
+    #network_i = input('Please specify the network and mask to enable[10.1.0.0]: ')
+    network_e = 'network ' + network_i
+    config_commands = [routereigrp,network_e]
+    output = myssh.send_config_set(config_commands)
+    print(output)
+    return('Router \"' + device + '\" configured')
+
+def ospf(hostip,ospfprocid,network_i,area_id):
+    device = {
+    'device_type': 'cisco_ios',
+    'host': hostip,
+    'username': 'amine',
+    'password': 'amine123',
+    'secret': 'amine123'
+    }
+    myssh = ConnectHandler(**device)
+    hostname = myssh.send_command('show run | i host')
+    x = hostname.split()
+    device = x[1]
+    #ospfprocid = input('OSPF Process ID #: ')
+    routerospf = 'router ospf ' + ospfprocid
+    config_commands = [routerospf]
+    output = myssh.send_config_set(config_commands)
+    print(output)
+    #network_i = input('Please specify the network and mask to enable[10.1.0.0 0.0.255.255]: ')
+    #area_id = input('Enter the area to assign this network to: ')
+    network_e = 'network ' + network_i + ' area ' + area_id
+    config_commands = [routerospf,network_e]
+    output = myssh.send_config_set(config_commands)
+    print(output)
+    return('Router \"' + device + '\" configured')
+
+def changehostname(iprouter,hostname):
+    device = {
+    'device_type': 'cisco_ios',
+    'host': iprouter ,
+    'username': 'amine',
+    'password': 'amine123',
+    'secret': 'amine123',
+    }
+    net_connect = ConnectHandler(**device)
+    net_connect.enable()
+    nouveau_nom_hote = hostname
+    net_connect.config_mode()
+    output = net_connect.send_config_set(['hostname ' + nouveau_nom_hote])
+    net_connect.exit_config_mode()
+    output += net_connect.save_config()
+    print(output)
+    net_connect.disconnect()
+    return('Router \"' + device + '\" configured')
+
+def set_interface(iprouter,interface,description,network,Masque):
+    device = {
+    'device_type': 'cisco_ios',
+    'ip': iprouter,        
+    'username': 'amine',     
+    'password': 'amine123',     
+    'secret': 'secret', 
+    }
+    net_connect = ConnectHandler(**device)
+    net_connect.enable()
+    #interface= input('Interface à configurer: ')
+    #description= input('description : ' )
+    description_conf= 'description' +' '+ description
+    #network = input(' Network : ')
+    #Masque = input(' Masque: ')
+    network_conf= 'ip add' +' '+ network +' '+ Masque
+    interface_conf= 'interface' +' ' + interface
+    interface_config = [interface_conf,description_conf,network_conf,'no shutdown','exit']
+    output = net_connect.send_config_set(interface_config)
+    # Disconnect from the device
+    net_connect.disconnect()
+    return output
+
+    

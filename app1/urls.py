@@ -7,4 +7,8 @@ urlpatterns = [
     path('signup/', views.user_signup, name='signup'),
     path('logout/', views.user_logout, name='logout'),
     path('hostname/', views.hostname, name='hostname'),
+    path('setinterface/', views.set_interface, name='set_interface'),
+    path('changehostname/', views.changehostname, name='changehostname'),
+    path('eigrp/', views.eigrp, name='eigrp'),
+    path('ospf/', views.ospf, name='ospf'),
 ]
