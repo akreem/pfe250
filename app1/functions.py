@@ -32,7 +32,7 @@ def HostnameFunc(router_p,verification):
     except Exception as e:
         return f'An error occurred {e}'
 
-def eigrp(hostip,eigrpprocid,network_i):
+def eigrpFunc(hostip,eigrpprocid,network_i):
     device = {
     'device_type': 'cisco_ios',
     'host': hostip,
@@ -56,7 +56,7 @@ def eigrp(hostip,eigrpprocid,network_i):
     print(output)
     return('Router \"' + device + '\" configured')
 
-def ospf(hostip,ospfprocid,network_i,area_id):
+def ospfFunc(hostip,ospfprocid,network_i,area_id):
     device = {
     'device_type': 'cisco_ios',
     'host': hostip,
@@ -81,7 +81,7 @@ def ospf(hostip,ospfprocid,network_i,area_id):
     print(output)
     return('Router \"' + device + '\" configured')
 
-def changehostname(iprouter,hostname):
+def changehostnameFunc(iprouter,hostname):
     device = {
     'device_type': 'cisco_ios',
     'host': iprouter ,
@@ -100,7 +100,7 @@ def changehostname(iprouter,hostname):
     net_connect.disconnect()
     return('Router \"' + device + '\" configured')
 
-def set_interface(iprouter,interface,description,network,Masque):
+def set_interfaceFunc(iprouter,interface,description,network,Masque):
     device = {
     'device_type': 'cisco_ios',
     'ip': iprouter,        
