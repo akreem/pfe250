@@ -123,4 +123,27 @@ def set_interfaceFunc(iprouter,interface,description,network,Masque):
     net_connect.disconnect()
     return output
 
+
+def rip_Func(hostip,network_i):
+    device = {
+        'device_type': 'cisco_ios',
+        'host': hostip,
+        'username': 'amine',
+        'password': 'amine123',
+        'secret': 'amine123',
+    }
+    myssh = ConnectHandler(**device)
+    hostname = myssh.send_command('show run | i host')
+    x = hostname.split()
+    device = x[1]
+
+    routerrip = 'router rip '
+    network_e = 'network ' + network_i
+    config_commands = [routerrip,
+                            network_e]
+    output = myssh.send_config_set(config_commands)
+    return output + 'Router \"' + device + '\" configured'
+
+
+
     

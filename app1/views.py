@@ -3,8 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form
-from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc
+from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form
+from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func
 
 # Create your views here.
 @login_required(login_url='login')
@@ -23,7 +23,7 @@ def user_signup(request):
             return HttpResponseRedirect('/')
         else:
             form = SignupForm()
-            return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})
 
 
 # login page
@@ -51,7 +51,7 @@ def user_logout(request):
     return redirect('login')
 
 #hostname view
-def hostname(response):
+def results(response):
     
     if response.method == 'POST':
         form = funcform(response.POST)
@@ -64,7 +64,7 @@ def hostname(response):
         form = funcform()
 
     context={'form': form}
-    return render(response,"hostname.html",context)
+    return render(response,"results.html",context)
 
 #set_interface view
 def set_interface(response):
@@ -137,4 +137,20 @@ def eigrp(response):
 
     context={'form': form}
     return render(response,"eigrp.html",context)
+
+#eigrp view
+def rip(response):
+    if response.method == 'POST':
+        form = rip_form(response.POST)
+        if form.is_valid():
+            hostip = form.cleaned_data['hostip']
+            network_i = form.cleaned_data['network_i']
+
+            job = rip_Func(hostip,network_i)
+            return HttpResponse(f'Job result : {job}')
+    else:
+        form = rip_form()
+
+    context={'form': form}
+    return render(response,"rip.html",context)
 

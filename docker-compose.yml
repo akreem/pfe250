@@ -9,7 +9,6 @@ services:
       - "8011:8000"
     depends_on:
       - db
-    restart: on-failure:10
 
   db:
     image: postgres:latest
