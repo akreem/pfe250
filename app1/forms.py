@@ -89,3 +89,69 @@ class rip_form(forms.Form):
         # Applying CSS classes to the fields
         self.fields['hostip'].widget.attrs.update({'class': 'form-control'})
         self.fields['network_i'].widget.attrs.update({'class': 'form-control'})
+
+class L3VPNOSPF_form(forms.Form):
+    hostip = forms.CharField(label="hostip",max_length=50)
+    network_i = forms.CharField(label="network_i",max_length=50)
+    def __init__(self, *args, **kwargs):
+        super(L3VPNOSPF_form, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['hostip'].widget.attrs.update({'class': 'form-control'})
+        self.fields['network_i'].widget.attrs.update({'class': 'form-control'})
+
+
+class L3VPNOSPF_form(forms.Form):
+    router_ip = forms.CharField(label="hostip",max_length=50)
+    VRF_name = forms.CharField(label="ospfprocid",max_length=50)
+    OSPF_ID = forms.CharField(label="network_i",max_length=50) 
+    network = forms.CharField(label="area_id",max_length=50)
+    area = forms.CharField(label="area_id",max_length=50)
+    def __init__(self, *args, **kwargs):
+        super(L3VPNOSPF_form, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['router_ip'].widget.attrs.update({'class': 'form-control'})
+        self.fields['VRF_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['OSPF_ID'].widget.attrs.update({'class': 'form-control'})
+        self.fields['network'].widget.attrs.update({'class': 'form-control'})
+        self.fields['area'].widget.attrs.update({'class': 'form-control'})
+
+class L3VPNRIP_form(forms.Form):
+    router_ip = forms.CharField(label="hostip",max_length=50)
+    VRF_name = forms.CharField(label="ospfprocid",max_length=50)
+    ADDRESSE_CE_PE = forms.CharField(label="network_i",max_length=50) 
+    def __init__(self, *args, **kwargs):
+        super(L3VPNRIP_form, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['router_ip'].widget.attrs.update({'class': 'form-control'})
+        self.fields['VRF_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['ADDRESSE_CE_PE'].widget.attrs.update({'class': 'form-control'})
+
+class L3VPNEIGRP_form(forms.Form):
+    router_ip = forms.CharField(label="hostip",max_length=50)
+
+    def __init__(self, *args, **kwargs):
+        super(L3VPNEIGRP_form, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['router_ip'].widget.attrs.update({'class': 'form-control'})
+
+
+class creationvrf_form(forms.Form):
+    router_ip = forms.CharField(label="hostip",max_length=50)
+    nom_vrf = forms.CharField(label="nom_vrf",max_length=50)
+    rd = forms.CharField(label="rd",max_length=50)
+    rt = forms.CharField(label="rt",max_length=50)
+    interface_pe = forms.CharField(label="interface_pe",max_length=50)
+    adresse_email = forms.CharField(label="adresse_email",max_length=50)
+    masque = forms.CharField(label="masque",max_length=50)
+    
+    def __init__(self, *args, **kwargs):
+        super(creationvrf_form, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['router_ip'].widget.attrs.update({'class': 'form-control'})
+        self.fields['nom_vrf'].widget.attrs.update({'class': 'form-control'})
+        self.fields['rd'].widget.attrs.update({'class': 'form-control'})
+        self.fields['rt'].widget.attrs.update({'class': 'form-control'})
+        self.fields['interface_pe'].widget.attrs.update({'class': 'form-control'})
+        self.fields['adresse_email'].widget.attrs.update({'class': 'form-control'})
+        self.fields['masque'].widget.attrs.update({'class': 'form-control'})
+

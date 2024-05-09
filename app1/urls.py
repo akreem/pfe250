@@ -12,4 +12,8 @@ urlpatterns = [
     path('eigrp/', views.eigrp, name='eigrp'),
     path('ospf/', views.ospf, name='ospf'),
     path('rip/', views.rip, name='rip'),
+    path('l3vpn_ospf/', views.l3vpn_ospf, name='l3vpn_ospf'),
+    path('l3vpn_rip/', views.l3vpn_rip, name='l3vpn_rip'),
+    path('l3vpn_eigrp/', views.l3vpn_eigrp, name='l3vpn_eigrp'),
+    path('create_vrf/<str:client>/', views.creation_vrf, name='create_vrf'),
 ]
