@@ -225,13 +225,14 @@ def creation_vrf(response, client):
         form = creationvrf_form(response.POST)
         if form.is_valid():
             hostip = form.cleaned_data['hostip']
-            vrf_id = form.cleaned_data['vrf_id']
-            rd_id = form.cleaned_data['rd_id']
-            rt_id = form.cleaned_data['rt_id']
-            interface = form.cleaned_data['interface']
-            ip_int = form.cleaned_data['ip_int']
-            
-            job = vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int)
+            vrf_id = form.cleaned_data['nom_vrf']
+            rd_id = form.cleaned_data['rd']
+            rt_id = form.cleaned_data['rt']
+            interface = form.cleaned_data['interface_pe']
+            ip_int = form.cleaned_data['adresse_ip_pe']
+            masque = form.cleaned_data['masque']
+
+            job = vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int,masque)
 
             return HttpResponse('Job result :')
     else:

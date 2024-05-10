@@ -144,7 +144,7 @@ def rip_Func(hostip,network_i):
     output = myssh.send_config_set(config_commands)
     return output + 'Router \"' + device + '\" configured'
 
-def vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int):
+def vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int,masque):
     device = {
         'device_type': 'cisco_ios',
         'host': hostip,
@@ -161,7 +161,7 @@ def vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int):
     rt = "route-target"+" "+"both"+" "+ rd_id + ":" + rt_id
     inte="int"+" "+interface
     int_f="ip vrf forwarding"+" "+vrf_id
-    ip_add="ip add"+" "+ip_int
+    ip_add="ip add"+" "+ip_int+" "+masque
     config_commands = [vrf, rd, rt, inte, int_f, ip_add
                         ]
     output = myssh.send_config_set(config_commands)
