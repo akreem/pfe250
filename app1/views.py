@@ -270,11 +270,11 @@ def client_ospf(response):
             hostip = form.cleaned_data['hostip']
             vrf = form.cleaned_data['vrf']
             network_i = form.cleaned_data['network_i']
-            ospf_id = form.cleaned_data['ospf_id']
+            ospfprocid = form.cleaned_data['ospf_id']
             area_id = form.cleaned_data['area_id']
             
             
-            job = clientospf(hostip,vrf,ospf_id,network_i,area_id)
+            job = clientospf(hostip,vrf,ospfprocid,network_i,area_id)
 
             return HttpResponse('Job result :')
     else:
