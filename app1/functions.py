@@ -166,3 +166,57 @@ def vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int):
                         ]
     output = myssh.send_config_set(config_commands)
     return output + 'Router \"' + device + '\" configured'
+
+def clientrip(hostip,vrf,network_i):
+    device = {
+        'device_type': 'cisco_ios',
+        'host': hostip,
+        'username': 'amine',
+        'password': 'amine123',
+        'secret': 'amine123',
+    }
+    myssh = ConnectHandler(**device)
+    hostname = myssh.send_command('show run | i host')
+    x = hostname.split()
+    device = x[1]
+    routerrip = 'router rip '
+    add_f= 'address-family ipv4 vrf'+' '+vrf
+    network_e = 'network ' + network_i
+    r_b='router bgp 1'
+    add_f= 'address-family ipv4 vrf'+' '+vrf
+    red='redistribute rip'
+    r_o= 'router rip'
+    add_f= 'address-family ipv4 vrf'+' '+vrf
+    red2='redistribute bgp 1 metr trans'
+    config_commands = [routerrip,
+                            add_f, network_e, r_b, add_f, red, r_o, red2]
+    output = myssh.send_config_set(config_commands)
+    return output + 'Router \"' + device + '\" configured'
+
+def clientospf(hostip,vrf,ospfprocid,network_i,area_id):
+    device = {
+        'device_type': 'cisco_ios',
+        'host': hostip,
+        'username': 'amine',
+        'password': 'amine123',
+        'secret': 'amine123',
+    }
+
+    myssh = ConnectHandler(**device)
+    hostname = myssh.send_command('show run | i host')
+    x = hostname.split()
+    device = x[1]
+    routerospf = 'router ospf ' + ospfprocid+" "+"vrf"+" "+vrf
+    config_commands = [routerospf
+                        ]
+
+    network_e = 'network ' + network_i + ' area ' + area_id
+    r_b='router bgp 1'
+    add_f= 'address-family ipv4 vrf'+' '+vrf
+    red='redistribute ospf'+' '+ospfprocid+' vrf '+vrf
+    r_o= 'router ospf '+ospfprocid+' vrf '+vrf
+    red2='redistribute bgp 1 subnets'
+    config_commands = [routerospf,
+                            network_e, r_b, add_f, red, r_o, red2]
+    output = myssh.send_config_set(config_commands)
+    return output + 'Router \"' + device + '\" configured'

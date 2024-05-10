@@ -141,7 +141,7 @@ class creationvrf_form(forms.Form):
     rd = forms.CharField(label="rd",max_length=50)
     rt = forms.CharField(label="rt",max_length=50)
     interface_pe = forms.CharField(label="interface_pe",max_length=50)
-    adresse_email = forms.CharField(label="adresse_email",max_length=50)
+    adresse_ip_pe = forms.CharField(label="adresse_ip_pe",max_length=50)
     masque = forms.CharField(label="masque",max_length=50)
     
     def __init__(self, *args, **kwargs):
@@ -152,6 +152,17 @@ class creationvrf_form(forms.Form):
         self.fields['rd'].widget.attrs.update({'class': 'form-control'})
         self.fields['rt'].widget.attrs.update({'class': 'form-control'})
         self.fields['interface_pe'].widget.attrs.update({'class': 'form-control'})
-        self.fields['adresse_email'].widget.attrs.update({'class': 'form-control'})
+        self.fields['adresse_ip_pe'].widget.attrs.update({'class': 'form-control'})
         self.fields['masque'].widget.attrs.update({'class': 'form-control'})
 
+class clientrip_form(forms.Form):
+    hostip = forms.CharField(label="hostip",max_length=50)
+    vrf = forms.CharField(label="vrf",max_length=50)
+    network_i = forms.CharField(label="network_i",max_length=50)
+
+    def __init__(self, *args, **kwargs):
+        super(clientrip_form, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['hostip'].widget.attrs.update({'class': 'form-control'})
+        self.fields['vrf'].widget.attrs.update({'class': 'form-control'})
+        self.fields['network_i'].widget.attrs.update({'class': 'form-control'})

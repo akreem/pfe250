@@ -3,8 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form
-from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate
+from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form
+from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf
 
 # Create your views here.
 @login_required(login_url='login')
@@ -239,3 +239,44 @@ def creation_vrf(response, client):
 
     context={'form': form, 'client': client}
     return render(response,"creationvrf.html",context)
+
+
+#client_rip view
+@login_required(login_url='login')
+def client_rip(response):
+    if response.method == 'POST':
+        form = clientrip_form(response.POST)
+        if form.is_valid():
+            hostip = form.cleaned_data['hostip']
+            vrf = form.cleaned_data['vrf']
+            network_i = form.cleaned_data['network_i']
+            
+            job = clientrip(hostip,vrf,network_i)
+
+            return HttpResponse('Job result :')
+    else:
+        form = clientrip_form()
+
+    context={'form': form}
+    return render(response,"client_rip.html",context)
+
+#client_ospf view
+@login_required(login_url='login')
+def client_ospf(response):
+    if response.method == 'POST':
+        form = creationvrf_form(response.POST)
+        if form.is_valid():
+            hostip = form.cleaned_data['hostip']
+            vrf = form.cleaned_data['vrf']
+            ospfprocid = form.cleaned_data['ospfprocid']
+            network_i = form.cleaned_data['network_i']
+            area_id = form.cleaned_data['area_id']
+            
+            job = clientospf(hostip,vrf,ospfprocid,network_i,area_id)
+
+            return HttpResponse('Job result :')
+    else:
+        form = creationvrf_form()
+
+    context={'form': form, 'client': client}
+    return render(response,"client_rip.html",context)
