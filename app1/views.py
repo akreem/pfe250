@@ -276,7 +276,7 @@ def client_ospf(response):
             
             job = clientospf(hostip,vrf,ospfprocid,network_i,area_id)
 
-            return HttpResponse('Job result :')
+            return HttpResponse(f'Job result :'{job})
     else:
         form = clientospf_form()
 
