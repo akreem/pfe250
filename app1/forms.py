@@ -166,3 +166,20 @@ class clientrip_form(forms.Form):
         self.fields['hostip'].widget.attrs.update({'class': 'form-control'})
         self.fields['vrf'].widget.attrs.update({'class': 'form-control'})
         self.fields['network_i'].widget.attrs.update({'class': 'form-control'})
+
+
+class clientospf_form(forms.Form):
+    hostip = forms.CharField(label="hostip",max_length=50)
+    vrf = forms.CharField(label="vrf",max_length=50)
+    network_i = forms.CharField(label="network_i",max_length=50)
+    ospf_id = forms.CharField(label="ospf_id",max_length=50)
+    area_id = forms.CharField(label="area_id",max_length=50)
+
+    def __init__(self, *args, **kwargs):
+        super(clientospf_form, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['hostip'].widget.attrs.update({'class': 'form-control'})
+        self.fields['vrf'].widget.attrs.update({'class': 'form-control'})
+        self.fields['network_i'].widget.attrs.update({'class': 'form-control'})
+        self.fields['ospf_id'].widget.attrs.update({'class': 'form-control'})
+        self.fields['area_id'].widget.attrs.update({'class': 'form-control'})

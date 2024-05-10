@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form
+from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form, clientospf_form
 from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf
 
 # Create your views here.
@@ -234,7 +234,7 @@ def creation_vrf(response, client):
 
             job = vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int,masque)
 
-            return HttpResponse('Job result :')
+            return HttpResponseRedirect('/client_ospf')
     else:
         form = creationvrf_form()
 
@@ -265,7 +265,7 @@ def client_rip(response):
 @login_required(login_url='login')
 def client_ospf(response):
     if response.method == 'POST':
-        form = creationvrf_form(response.POST)
+        form = clientospf_form(response.POST)
         if form.is_valid():
             hostip = form.cleaned_data['hostip']
             vrf = form.cleaned_data['vrf']
@@ -277,7 +277,7 @@ def client_ospf(response):
 
             return HttpResponse('Job result :')
     else:
-        form = creationvrf_form()
+        form = clientospf_form()
 
-    context={'form': form, 'client': client}
-    return render(response,"client_rip.html",context)
+    context={'form': form}
+    return render(response,"client_ospf.html",context)
