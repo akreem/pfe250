@@ -136,7 +136,7 @@ class L3VPNEIGRP_form(forms.Form):
 
 
 class creationvrf_form(forms.Form):
-    router_ip = forms.CharField(label="hostip",max_length=50)
+    hostip = forms.CharField(label="hostip",max_length=50)
     nom_vrf = forms.CharField(label="nom_vrf",max_length=50)
     rd = forms.CharField(label="rd",max_length=50)
     rt = forms.CharField(label="rt",max_length=50)
@@ -147,7 +147,7 @@ class creationvrf_form(forms.Form):
     def __init__(self, *args, **kwargs):
         super(creationvrf_form, self).__init__(*args, **kwargs)
         # Applying CSS classes to the fields
-        self.fields['router_ip'].widget.attrs.update({'class': 'form-control'})
+        self.fields['hostip'].widget.attrs.update({'class': 'form-control'})
         self.fields['nom_vrf'].widget.attrs.update({'class': 'form-control'})
         self.fields['rd'].widget.attrs.update({'class': 'form-control'})
         self.fields['rt'].widget.attrs.update({'class': 'form-control'})
