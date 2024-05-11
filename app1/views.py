@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form, clientospf_form, resform
+from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form, clientospf_form, resform,clienteigrp_form
 from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf, get_results
 
 # Create your views here.
@@ -232,13 +232,13 @@ def creation_vrf(response, client):
             ip_int = form.cleaned_data['adresse_ip_pe']
             masque = form.cleaned_data['masque']
 
-            job = vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int,masque)
+            #job = vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int,masque)
 
-            return HttpResponseRedirect('/client_ospf')
+            return HttpResponseRedirect(f'/client_{client}')
     else:
         form = creationvrf_form()
 
-    context={'form': form, 'client': client}
+    context={'form': form, 'client': client.upper()}
     return render(response,"creationvrf.html",context)
 
 
@@ -254,7 +254,7 @@ def client_rip(response):
             
             job = clientrip(hostip,vrf,network_i)
 
-            return HttpResponse('Job result :')
+            return HttpResponse(f'Job result :{job}')
     else:
         form = clientrip_form()
 
@@ -273,7 +273,6 @@ def client_ospf(response):
             ospfprocid = form.cleaned_data['ospf_id']
             area_id = form.cleaned_data['area_id']
             
-            
             job = clientospf(hostip,vrf,ospfprocid,network_i,area_id)
 
             return HttpResponse(f'Job result :{job}')
@@ -282,3 +281,22 @@ def client_ospf(response):
 
     context={'form': form}
     return render(response,"client_ospf.html",context)
+
+#client_eigrp view NOTREADY
+@login_required(login_url='login')
+def client_eigrp(response):
+    if response.method == 'POST':
+        form = clienteigrp_form(response.POST)
+        if form.is_valid():
+            hostip = form.cleaned_data['hostip']
+            vrf = form.cleaned_data['vrf']
+            network_i = form.cleaned_data['network_i']
+        
+            job = clientospf(hostip,vrf,ospfprocid,network_i,area_id)
+
+            return HttpResponse(f'Job result :{job}')
+    else:
+        form = clienteigrp_form()
+
+    context={'form': form}
+    return render(response,"client_eigrp.html",context)
