@@ -30,6 +30,13 @@ class funcform(forms.Form):
         # Applying CSS classes to the fields
         self.fields['router'].widget.attrs.update({'class': 'form-control'})
         self.fields['verification'].widget.attrs.update({'class': 'form-control'})
+    
+class resform(forms.Form):
+    router = forms.CharField(label="Router",max_length=50)
+    def __init__(self, *args, **kwargs):
+        super(resform, self).__init__(*args, **kwargs)
+        # Applying CSS classes to the fields
+        self.fields['router'].widget.attrs.update({'class': 'form-control'})
 
 class setinterfaceform(forms.Form):
     iprouter = forms.CharField(label="iprouter",max_length=50)

@@ -3,8 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form, clientospf_form
-from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf
+from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form, clientospf_form, resform
+from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf, get_results
 
 # Create your views here.
 @login_required(login_url='login')
@@ -55,14 +55,14 @@ def user_logout(request):
 def results(response):
     
     if response.method == 'POST':
-        form = funcform(response.POST)
+        form = resform(response.POST)
         if form.is_valid():
-            router = form.cleaned_data['router']
-            verification = form.cleaned_data['verification']
-            job = HostnameFunc(router,verification)
+            hostname = form.cleaned_data['router']
+            job = get_results(hostname)
+            #job = HostnameFunc(router,verification)
             return HttpResponse(f'Job result : {job}')
     else:
-        form = funcform()
+        form = resform()
 
     context={'form': form}
     return render(response,"results.html",context)

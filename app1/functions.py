@@ -32,6 +32,41 @@ def HostnameFunc(router_p,verification):
     except Exception as e:
         return f'An error occurred {e}'
 
+def get_results(hostname):
+    username = "amine"
+    password = "amine123"
+    try:
+        # Créer un objet SSHClient
+        ssh_client = paramiko.SSHClient()
+
+        # Ignorer les clés SSH inconnues
+        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Se connecter au périphérique
+        ssh_client.connect(hostname, username=username, password=password, timeout=10)
+
+        # Créer un canal SSH
+        ssh_channel = ssh_client.invoke_shell()
+
+        # Attendre que le périphérique soit prêt
+        time.sleep(1)
+
+        # Envoyer la commande "show ip route"
+        ssh_channel.send("show ip route\n")
+
+        # Attendre un certain temps pour que la sortie soit générée
+        time.sleep(2)
+
+        # Lire la sortie
+        output = ssh_channel.recv(65535).decode("utf-8")
+
+        # Fermer la connexion SSH
+        ssh_client.close()
+
+        return output
+    except Exception as e:
+        return str(e)
+
 def eigrpFunc(hostip,eigrpprocid,network_i):
     device = {
     'device_type': 'cisco_ios',
