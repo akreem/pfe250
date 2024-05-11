@@ -249,7 +249,7 @@ def creation_vrf(response, client):
             ip_int = form.cleaned_data['adresse_ip_pe']
             masque = form.cleaned_data['masque']
 
-            #job = vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int,masque)
+            job = vrfcreate(hostip,vrf_id,rd_id,rt_id,interface,ip_int,masque)
 
             return HttpResponseRedirect(f'/client_{client}')
     else:
