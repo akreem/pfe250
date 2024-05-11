@@ -19,4 +19,5 @@ urlpatterns = [
     path('client_rip/', views.client_rip, name='client_rip'),
     path('client_ospf/', views.client_ospf, name='client_ospf'),
     path('client_eigrp/', views.client_eigrp, name='client_eigrp'),
+    path('changepassword/', views.changepassword, name='changepassword'),
 ]

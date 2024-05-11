@@ -2,7 +2,7 @@
 <html lang="en">
 {% load static %}
 <head>
-    <title>My Application</title>
+    <title>{% block title %} {% endblock %}</title>
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
@@ -211,7 +211,7 @@
                                 </a>
                             </div>
                             <ul class="pro-body">
-                                <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
+                                <li><a href="changepassword" class="dropdown-item"><i class="feather icon-user"></i> Change password</a></li>
                                 <!--<li><a href="javascript:" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
                                 
                                 <li><a href="message.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
