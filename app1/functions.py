@@ -1,6 +1,7 @@
 from time import sleep
 from netmiko import ConnectHandler
 import paramiko
+import time
 
 def HostnameFunc(router_p,verification):
     try:
