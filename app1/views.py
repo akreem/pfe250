@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form, clientospf_form, resform,clienteigrp_form
-from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf, get_results
+from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf, get_results, clienteigrp
 from django.contrib.auth.forms import PasswordChangeForm
 
 # Create your views here.
@@ -70,7 +70,6 @@ def user_logout(request):
 #hostname view
 @login_required(login_url='login')
 def results(response):
-    
     if response.method == 'POST':
         form = resform(response.POST)
         if form.is_valid():
@@ -299,7 +298,7 @@ def client_ospf(response):
     context={'form': form}
     return render(response,"client_ospf.html",context)
 
-#client_eigrp view NOTREADY
+#client_eigrp view 
 @login_required(login_url='login')
 def client_eigrp(response):
     if response.method == 'POST':
@@ -307,9 +306,9 @@ def client_eigrp(response):
         if form.is_valid():
             hostip = form.cleaned_data['hostip']
             vrf = form.cleaned_data['vrf']
-            network_i = form.cleaned_data['network_i']
+            eigrpprocid = form.cleaned_data['eigrpprocid']
         
-            job = clientospf(hostip,vrf,ospfprocid,network_i,area_id)
+            job = clienteigrp(hostip,vrf,eigrpprocid)
 
             return HttpResponse(f'Job result :{job}')
     else:
@@ -317,3 +316,6 @@ def client_eigrp(response):
 
     context={'form': form}
     return render(response,"client_eigrp.html",context)
+
+
+

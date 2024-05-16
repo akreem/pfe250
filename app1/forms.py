@@ -194,11 +194,11 @@ class clientospf_form(forms.Form):
 class clienteigrp_form(forms.Form):
     hostip = forms.CharField(label="hostip",max_length=50)
     vrf = forms.CharField(label="vrf",max_length=50)
-    network_i = forms.CharField(label="network_i",max_length=50)
+    eigrpprocid = forms.CharField(label="eigrpprocid",max_length=50)
 
     def __init__(self, *args, **kwargs):
         super(clienteigrp_form, self).__init__(*args, **kwargs)
         # Applying CSS classes to the fields
         self.fields['hostip'].widget.attrs.update({'class': 'form-control'})
         self.fields['vrf'].widget.attrs.update({'class': 'form-control'})
-        self.fields['network_i'].widget.attrs.update({'class': 'form-control'})
+        self.fields['eigrpprocid'].widget.attrs.update({'class': 'form-control'})

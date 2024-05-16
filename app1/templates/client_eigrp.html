@@ -22,7 +22,8 @@
                 <div class="card-block table-border-style">
                   <div class="table-responsive">
                     <form method="post">
-                      {% csrf_token %} {{form.as_p}}
+                      {% csrf_token %} 
+                      {{form.as_p}}
                       <input type="submit" name="Submit" class="btn btn-primary" value="Submit"/>
                     </form>
                   </div>
