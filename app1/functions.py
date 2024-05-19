@@ -305,7 +305,6 @@ def supp_routage(hostip,p):
 
 
 def supp_vrf(hostip,vrf):
-    hostip = input('Router IP: ')
     device = {
         'device_type': 'cisco_ios',
         'host': hostip,
