@@ -3,8 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form, clientospf_form, resform,clienteigrp_form
-from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf, get_results, clienteigrp
+from .forms import SignupForm, funcform, setinterfaceform, changehostnameform, ospf_form, eigrp_form, rip_form, L3VPNOSPF_form, L3VPNRIP_form,L3VPNEIGRP_form, creationvrf_form, clientrip_form, clientospf_form, resform,clienteigrp_form, deleteVRF_form, deleteRoutage_form
+from .functions import HostnameFunc, set_interfaceFunc, changehostnameFunc, ospfFunc, eigrpFunc, rip_Func, vrfcreate, clientrip, clientospf, get_results, clienteigrp, supp_routage, supp_vrf
 from django.contrib.auth.forms import PasswordChangeForm
 
 # Create your views here.
@@ -316,6 +316,44 @@ def client_eigrp(response):
 
     context={'form': form}
     return render(response,"client_eigrp.html",context)
+
+
+#delete_protocol view 
+@login_required(login_url='login')
+def delete_protocol(response):
+    if response.method == 'POST':
+        form = deleteRoutage_form(response.POST)
+        if form.is_valid():
+            hostip = form.cleaned_data['hostip']
+            p = form.cleaned_data['protocol']
+
+            job = supp_routage(hostip,p)
+
+            return HttpResponse(f'Job result :{job}')
+    else:
+        form = deleteRoutage_form()
+
+    context={'form': form}
+    return render(response,"deleteroutage.html",context)
+
+
+#delete_vrf view 
+@login_required(login_url='login')
+def delete_vrf(response):
+    if response.method == 'POST':
+        form = deleteVRF_form(response.POST)
+        if form.is_valid():
+            hostip = form.cleaned_data['hostip']
+            vrf = form.cleaned_data['vrf']
+
+            job = supp_vrf(hostip,vrf)
+
+            return HttpResponse(f'Job result :{job}')
+    else:
+        form = deleteVRF_form()
+
+    context={'form': form}
+    return render(response,"deletevrf.html",context)
 
 
 

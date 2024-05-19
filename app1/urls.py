@@ -20,4 +20,6 @@ urlpatterns = [
     path('client_ospf/', views.client_ospf, name='client_ospf'),
     path('client_eigrp/', views.client_eigrp, name='client_eigrp'),
     path('changepassword/', views.changepassword, name='changepassword'),
+    path('delete_routage/', views.delete_protocol, name='delete_routage'),
+    path('delete_vrf/', views.delete_vrf, name='delete_vrf'),
 ]

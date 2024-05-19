@@ -21,8 +21,8 @@ title="" data-toggle="tooltip"
 title="" data-toggle="tooltip" 
 >OSPF</a>
 
-<button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">L3VPN</button>
-<div class="dropdown-menu">
+<button class="btn btn-warning dropdown-toggle" type="button" id="vpnButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">L3VPN</button>
+<div class="dropdown-menu" aria-labelledby="vpnButton">
     <a class="dropdown-item" href="/create_vrf/ospf/">OSPF</a>
     <a class="dropdown-item" href="/create_vrf/eigrp/"   >EIGRP</a>
     <a class="dropdown-item" href="/create_vrf/rip/">RIP</a>
@@ -39,10 +39,18 @@ title="" data-toggle="tooltip"
 <a href="/changehostname" type="button" class="btn btn-dark" 
 title="" data-toggle="tooltip" 
 >CHANGE HOSTNAME</a>
+<div class="btn-group">
+<button class="btn btn-danger dropdown-toggle" type="button" id="deleteButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Delete</button>
+<div class="dropdown-menu" aria-labelledby="deleteButton2">
+    <a class="dropdown-item" href="/delete_vrf">VRF</a>
+    <a class="dropdown-item" href="/delete_routage">Routing protocol</a>
+</div>
+</div>
 
 <a href="/results" type="button" class="btn btn-success" 
 title="" data-toggle="tooltip" 
 >CONFIGURATION RESULTS</a>
+
 
 
 {% endblock content %}

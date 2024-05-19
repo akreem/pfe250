@@ -285,3 +285,43 @@ def clienteigrp(hostip,vrf,eigrpprocid):
     output = myssh.send_config_set(config_commands)
     return  output+ 'Router \"' + device + '\" configured'
 
+def supp_routage(hostip,p):
+    device = {
+        'device_type': 'cisco_ios',
+        'host': hostip,
+        'username': 'amine',
+        'password': 'amine123',
+        'secret': 'amine123',
+    }
+
+    myssh = ConnectHandler(**device)
+    hostname = myssh.send_command('show run | i host')
+    x = hostname.split()
+    device = x[1]
+    sup_p = 'no router ' + p
+    config_commands = [sup_p]
+    output = myssh.send_config_set(config_commands)
+    return 'Router \"' + device + '\" configured'
+
+
+def supp_vrf(hostip,vrf):
+    hostip = input('Router IP: ')
+    device = {
+        'device_type': 'cisco_ios',
+        'host': hostip,
+        'username': 'amine',
+        'password': 'amine123',
+        'secret': 'amine123',
+    }
+    myssh = ConnectHandler(**device)
+    hostname = myssh.send_command('show run | i host')
+    x = hostname.split()
+    device = x[1]
+    sup_vrf = 'no ip vrf ' + vrf
+    config_commands = [sup_vrf]
+    output = myssh.send_config_set(config_commands)
+    return 'Router \"' + device + '\" configured'
+
+
+
+
